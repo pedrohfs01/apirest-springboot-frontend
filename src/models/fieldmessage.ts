@@ -1,4 +1,4 @@
-export interface FieldMessage{
-    fieldName: string;
-    message: string;
+export interface FieldMessage {
+    fieldName : string;
+    msg : string;
 }

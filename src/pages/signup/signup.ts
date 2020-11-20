@@ -24,7 +24,7 @@ export class SignupPage {
     public formBuilder:FormBuilder,
     public estadoService: EstadoService,
     public cidadeService: CidadeService,
-    public clienteServce: ClienteService,
+    public clienteService: ClienteService,
     public alertControl: AlertController) {
 
       this.formGroup = this.formBuilder.group({
@@ -66,22 +66,26 @@ export class SignupPage {
     }, error =>{});
   }
   signupUser(){
-    this.clienteServce.insert(this.formGroup.value).subscribe(response =>{
+    this.clienteService.insert(this.formGroup.value)
+    .subscribe(response => {
       this.showInsertOk();
-    }, error => {});
+    },
+    error => {});
   }
 
-  showInsertOk(){
+  showInsertOk() {
     let alert = this.alertControl.create({
-      title: 'Sucesso',
-      message: 'Cadastrado com sucesso',
+      title: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
       enableBackdropDismiss: false,
-      buttons: [{
-        text: 'Ok',
-        handler: () => {
-          this.navCtrl.pop();
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.navCtrl.pop();
+          }
         }
-      }]
+      ]
     });
     alert.present();
   }

@@ -65,7 +65,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     handle422(errorObj){
         let alert = this.alertController.create({
             title: "Erro 422. Erro de validação",
-            message: this.listErrors(errorObj.error),
+            message: this.listErrors(errorObj.errors),
             enableBackdropDismiss: false,
             buttons : [
                 {
@@ -93,7 +93,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     private listErrors(messages : FieldMessage[]) : string {
         let s : string = '';
         for (var i=0; i<messages.length; i++) {
-            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].msg + '</p>';
         }
         return s;
     }
