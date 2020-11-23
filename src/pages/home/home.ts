@@ -3,6 +3,7 @@ import { MenuController, NavController } from 'ionic-angular';
 import { IonicPage } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
+import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
@@ -16,7 +17,10 @@ export class HomePage {
     senha: ""
   };
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public authService: AuthService) {
+  constructor(public navCtrl: NavController,
+    public menu: MenuController,
+    public authService: AuthService,
+    public storage: StorageService) {
 
   }
   ionViewWillEnter() {
@@ -27,11 +31,13 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.authService.refreshToken().subscribe(
-      response => {
-        this.authService.successfulLogin(response.headers.get('Authorization'));
-        this.navCtrl.setRoot("CategoriasPage");
-      }, error => {});
+    if (this.storage.getLocalUser() != null) {
+      this.authService.refreshToken().subscribe(
+        response => {
+          this.authService.successfulLogin(response.headers.get('Authorization'));
+          this.navCtrl.setRoot("CategoriasPage");
+        }, error => { });
+    }
   }
 
   login() {
@@ -39,9 +45,9 @@ export class HomePage {
       response => {
         this.authService.successfulLogin(response.headers.get('Authorization'));
         this.navCtrl.setRoot("CategoriasPage");
-      }, error => {});
+      }, error => { });
   }
-  signup(){
+  signup() {
     this.navCtrl.push("SignupPage");
   }
 }

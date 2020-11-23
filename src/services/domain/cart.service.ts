@@ -18,23 +18,18 @@ export class CartService {
     getCart(): Cart {
         let cart: Cart = this.storage.getCart();
         if (cart == null) {
-            console.log('getcart')
-            
             cart = this.createOrClearCart();
         }
-        console.log('getcart novo', cart)
         return cart;
     }
 
-    addProduto(produto: ProdutoDTO): Cart {
-console.log('addporduto')
+    addProduto(produto: ProdutoDTO) : Cart {
         let cart = this.getCart();
-        let position = cart.items.findIndex(x => x.produto.id == produto.id);
+        const position = cart.items.findIndex(x => x.produto.id == produto.id);
         if (position == -1) {
-            cart.items.push({ quantidade: 1, produto: produto });
+            cart.items.push({quantidade: 1, produto: produto});
         }
         this.storage.setCart(cart);
         return cart;
-
     }
 }
