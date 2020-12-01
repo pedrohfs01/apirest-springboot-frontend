@@ -25,4 +25,10 @@
       <p>{{item.preco | currency}}</p>
     </button>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingText="Carregando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
